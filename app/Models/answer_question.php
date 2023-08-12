@@ -16,6 +16,17 @@ class answer_question extends Model
         'is_book',
         'is_currect',
     ];
+
+    protected $casts = [
+        'uuid' => 'uuid',
+        'answer_id' => 'integer',
+        'question_id' => 'integer',
+        'date' => 'date',
+        'is_test' => 'boolean',
+        'is_book' => 'boolean',
+        'is_correct' => 'boolean',
+    ];
+
     public function answer()
     {
         return $this->belongsTo(Answer::class);

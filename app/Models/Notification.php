@@ -2,24 +2,21 @@
 
 namespace App\Models;
 
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-class Image extends Model
+class Notification extends Model
 {
     use HasFactory;
     protected $fillable=[
-        'url'
+        'uuid',
+        'title',
+        'content'
     ];
+
     protected $casts = [
         'uuid' => 'uuid',
-        'url' => 'string',
+        'title' => 'string',
+        'content' => 'string',
     ];
-    protected $table='images';
-    public function imageable():MorphTo
-    {
-        return $this->morphTo();
-    }
 }

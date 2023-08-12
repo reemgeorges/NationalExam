@@ -15,6 +15,17 @@ class Question extends Model
         'mark',
         'link'
     ];
+
+    protected $casts = [
+        'id' => 'integer', // Assuming 'id' is an integer
+        'uuid' => 'uuid', // Assuming 'uuid' is a UUID
+        'text_questions' => 'string', // Assuming 'text_questions' is a string
+        'item_id' => 'integer', // Assuming 'item_id' is an integer
+        'mark' => 'double', // Assuming 'mark' is a double
+        'link' => 'string', // Assuming 'link' is a string
+    ];
+
+    
     public function item(){
         return $this->belongsTo(Question::class);
     }

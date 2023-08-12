@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('images', function (Blueprint $table) {
+        Schema::create('tokens', function (Blueprint $table) {
             $table->id();
             $table->uuid();
-            $table->morphs('imageable');
-            $table->string('url');
+            $table->morphs('tokenable');
+            $table->string('token_name');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('images');
+        Schema::dropIfExists('tokens');
     }
 };

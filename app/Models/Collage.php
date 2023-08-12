@@ -13,6 +13,12 @@ class Collage extends Model
         'uuid',
         'name'
     ];
+
+    protected $casts = [
+        'uuid' => 'uuid', // Cast 'uuid' column to a UUID instance
+        'name' => 'string', // Cast 'name' column to a string
+    ];
+    
     public function users(){
         return $this->hasMany(User::class);
     }

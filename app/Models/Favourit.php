@@ -12,6 +12,14 @@ class Favourit extends Model
         'uuid',
         'collection_questions'
     ];
+
+    protected $casts = [
+        'uuid' => 'uuid',
+        'user_id' => 'integer',
+        'collection_questions' => 'string',
+ ];
+
+ 
     public function User(){
         return $this->belongsTo(User::class);
     }

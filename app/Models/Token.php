@@ -2,23 +2,22 @@
 
 namespace App\Models;
 
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-class Image extends Model
+class Token extends Model
 {
     use HasFactory;
-    protected $fillable=[
-        'url'
-    ];
+
+    protected $fillable =['uuid','token_name'];
+
     protected $casts = [
         'uuid' => 'uuid',
-        'url' => 'string',
+        'token_name' => 'string',
     ];
-    protected $table='images';
-    public function imageable():MorphTo
+
+    public function tokenable():MorphTo
     {
         return $this->morphTo();
     }

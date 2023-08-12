@@ -5,21 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Answer extends Model
+class Slider extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'uuid',
-        'text_answer',
+        'link'
     ];
 
-    protected $cast=[
+    protected $casts=[
         'uuid' => 'uuid',
-        'text_answer' => 'string',
+        'link' => 'string',
     ];
-
-    public function answersQuestions()
-    {
-        return $this->hasMany(answer_question::class);
-    }
 }
