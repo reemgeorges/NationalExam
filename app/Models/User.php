@@ -44,12 +44,12 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-            'uuid' => 'uuid',
+            // 'uuid' => 'char',
             'name' => 'string',
             'phone' => 'string',
             'code' => 'string',
             'collage_id' => 'integer',
-    
+
     ];
     public function collage()
     {
@@ -67,7 +67,7 @@ class User extends Authenticatable
     public function complaints(){
         return $this->hasMany(Complaint::class);
     }
-    public function tokens():MorphMany
+    public function tokens_able():MorphMany
     {
         return $this->morphMany(Token::class,'tokenable');
     }

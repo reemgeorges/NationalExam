@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CollageCollection;
+use App\Http\Resources\CollageResource;
+use App\Http\traits\GeneralTrait;
 use App\Models\Collage;
 use Illuminate\Http\Request;
 
 class CollageController extends Controller
 {
+    use GeneralTrait;
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +18,15 @@ class CollageController extends Controller
      */
     public function index()
     {
-        //
+       try{
+        $collages=Collage::all();
+        $data['collages']=CollageResource::collection($collages);
+        return $this->apiResponse($data,true,'all collage',200);
+
+       }
+       catch(\Exception $ex){
+        return $this->apiResponse(null,false,$ex->getMessage(),500);
+       }
     }
 
     /**

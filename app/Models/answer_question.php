@@ -18,7 +18,7 @@ class answer_question extends Model
     ];
 
     protected $casts = [
-        'uuid' => 'uuid',
+        // 'uuid' => 'uuid',
         'answer_id' => 'integer',
         'question_id' => 'integer',
         'date' => 'date',
