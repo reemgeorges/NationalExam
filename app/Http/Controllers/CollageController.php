@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Answer_QuestionResource;
 use App\Http\Resources\CollageCollection;
 use App\Http\Resources\CollageResource;
+use App\Http\Resources\ItemResource;
+use App\Http\Resources\QuestionResource;
 use App\Http\traits\GeneralTrait;
 use App\Models\Collage;
 use Illuminate\Http\Request;
@@ -18,15 +21,14 @@ class CollageController extends Controller
      */
     public function index()
     {
-       try{
-        $collages=Collage::all();
-        $data['collages']=CollageResource::collection($collages);
-        return $this->apiResponse($data,true,'all collage',200);
+        try {
+            $collages = Collage::all();
+            $data['collages'] = CollageResource::collection($collages);
+            return $this->apiResponse($data, true, 'all collage', 200);
 
-       }
-       catch(\Exception $ex){
-        return $this->apiResponse(null,false,$ex->getMessage(),500);
-       }
+        } catch(\Exception $ex) {
+            return $this->apiResponse(null, false, $ex->getMessage(), 500);
+        }
     }
 
     /**
@@ -46,9 +48,29 @@ class CollageController extends Controller
      * @param  \App\Models\Collage  $collage
      * @return \Illuminate\Http\Response
      */
-    public function show(Collage $collage)
+    public function show($collageUuid)
     {
-        //
+        try {
+            // Find the collage based on the UUID
+            $collage = Collage::where('uuid', $collageUuid)->first();
+
+            if (!$collage) {
+                return $this->notFoundResponse('Collage not found.');
+            }
+
+            $items = $collage->items()->get();
+
+            if ($items->isEmpty()) {
+                return $this->notFoundResponse('Items not found.');
+            }
+
+            $data = ItemResource::collection($items);
+
+            return $this->apiResponse($data, true, 'Items retrieved successfully', 200);
+
+        } catch (\Exception $ex) {
+            return $this->apiResponse(null, false, $ex->getMessage(), 500);
+        }
     }
 
     /**
@@ -73,4 +95,36 @@ class CollageController extends Controller
     {
         //
     }
+
+
+
+
+    public function showQuestionByCollage($collageUuid)
+    {
+        try {
+            // Find the collage based on the UUID
+            $collage = Collage::where('uuid', $collageUuid)->first();
+
+            if (!$collage) {
+                return $this->notFoundResponse('Collage not found.');
+            }
+
+            $questions = $collage->questions;
+
+            if ($questions->isEmpty()) {
+                return $this->notFoundResponse('Questions not found.');
+            }
+
+            $data['collage'] = $collage->name;
+            $data['questions'] = Answer_QuestionResource::collection($questions);
+
+            return $this->apiResponse($data, true, 'Questions retrieved successfully', 200);
+
+        } catch (\Exception $ex) {
+            return $this->apiResponse(null, false, $ex->getMessage(), 500);
+        }
+    }
+
+
+
 }

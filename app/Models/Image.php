@@ -11,10 +11,10 @@ class Image extends Model
 {
     use HasFactory;
     protected $fillable=[
-        'url'
+         'uuid' ,'url'
     ];
     protected $casts = [
-        'uuid' => 'uuid',
+        // 'uuid' => 'uuid',
         'url' => 'string',
     ];
     protected $table='images';

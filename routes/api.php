@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthControllerUser;
 use App\Http\Controllers\CollageController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,5 +27,12 @@ Route::post('/login', [AuthControllerUser::class, 'login'])->name('login.user');
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/logout', [AuthControllerUser::class, 'logout'])->name('logout.user');
+
     Route::get('/all-collage',[CollageController::class,'index'])->name('all_collage');
+    Route::get('collages/{collage}', [CollageController::class, 'show']);
+
+    Route::post('/complaints', [ComplaintController::class, 'store']);
+
+    Route::get('collages/{collageUuid}/questions',[CollageController::class ,'showQuestionByCollage']);
+    Route::post('/profile',[UserController::class,'profile']);
 })->middleware('throttle:api');
