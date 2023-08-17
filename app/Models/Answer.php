@@ -14,11 +14,12 @@ class Answer extends Model
     ];
 
     protected $cast=[
-        'uuid' => 'uuid',
+        // 'uuid' => 'uuid',
         'text_answer' => 'string',
     ];
 
-    public function answersQuestions()
+
+    public function answerQuestions()
     {
         return $this->hasMany(answer_question::class);
     }

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 class Collage extends Model
 {
     use HasFactory;
+    
     protected $fillable = [
         'uuid',
         'name'
@@ -28,5 +29,10 @@ class Collage extends Model
     public function image():MorphOne
     {
         return $this->morphOne(Image::class,'imageable');
+    }
+
+    public function questions()
+    {
+        return $this->hasManyThrough(Question::class, Item::class);
     }
 }

@@ -67,9 +67,6 @@ class User extends Authenticatable
     public function complaints(){
         return $this->hasMany(Complaint::class);
     }
-    public function tokens_able():MorphMany
-    {
-        return $this->morphMany(Token::class,'tokenable');
-    }
+ 
 
 }

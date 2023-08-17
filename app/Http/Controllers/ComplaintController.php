@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ComplaintResource;
+use App\Http\Traits\GeneralTrait;
 use App\Models\Complaint;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class ComplaintController extends Controller
 {
+    use GeneralTrait;
     /**
      * Display a listing of the resource.
      *
@@ -25,7 +31,27 @@ class ComplaintController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator=Validator::make($request->all(),[
+            'content' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return $this->requiredField($validator->errors()->first());
+        }
+        try{
+            $user_id=Auth::id();
+            $request['user_id']=$user_id;
+
+             $request['uuid']=Str::uuid();
+              $complaint=complaint::create([$request->all()]);
+              $data['complaint']=new ComplaintResource($complaint);
+
+         return $this->apiResponse($data,true,'Complaint submitted successfully',201);
+
+
+        }catch(\Exception $ex){
+            return $this->apiResponse([],false,$ex->getMessage(),500);
+
+        }
     }
 
     /**
